@@ -81,6 +81,133 @@
     padding: 0;
     box-sizing: border-box;
   }
+  /* Animation for Background Shapes */
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes float-reverse {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(20px) rotate(-10deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+}
+
+/* Background Shapes Container */
+.bg-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Individual Shape Styling */
+.shape {
+  position: absolute;
+  opacity: 0.2;
+}
+
+.shape-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--dark-yellow);
+  animation: float 15s ease-in-out infinite;
+}
+
+.shape-square {
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--dark-yellow-light);
+  animation: float-reverse 18s ease-in-out infinite;
+}
+
+.shape-triangle {
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 70px solid rgba(230, 180, 0, 0.1);
+  animation: float 20s ease-in-out infinite;
+}
+
+/* Position the shapes around the page */
+.shape:nth-child(1) {
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+  top: 70%;
+  left: 15%;
+  animation-delay: 2s;
+}
+
+.shape:nth-child(3) {
+  top: 25%;
+  right: 10%;
+  animation-delay: 4s;
+}
+
+.shape:nth-child(4) {
+  top: 60%;
+  right: 15%;
+  animation-delay: 6s;
+}
+
+.shape:nth-child(5) {
+  top: 10%;
+  left: 45%;
+  animation-delay: 8s;
+}
+
+.shape:nth-child(6) {
+  top: 80%;
+  left: 50%;
+  animation-delay: 10s;
+}
+
+.shape:nth-child(7) {
+  top: 40%;
+  left: 25%;
+  animation-delay: 12s;
+}
+
+.shape:nth-child(8) {
+  top: 30%;
+  right: 30%;
+  animation-delay: 14s;
+}
+
+.shape:nth-child(9) {
+  top: 70%;
+  right: 35%;
+  animation-delay: 16s;
+}
   
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -206,147 +333,271 @@
     transition: var(--transition);
   }
   
-  /* Hero Section */
-  .hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    background-color: var(--navy-blue);
-    padding-top: 100px;
+  /* Enhanced Hero Section Styling */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: var(--navy-blue);
+  padding-top: 100px;
+  overflow: hidden;
+}
+
+/* Gradient Overlay for Hero */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(23, 42, 69, 0.8) 100%);
+  z-index: 0;
+}
+
+/* Hero Content Positioning */
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hero Background Elements */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Animated Gradient Lines */
+.gradient-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, var(--dark-yellow), transparent);
+  height: 1px;
+  width: 100%;
+  opacity: 0.2;
+  transform-origin: left;
+}
+
+.gradient-line:nth-child(1) {
+  top: 15%;
+  animation: slide-right 8s ease infinite;
+}
+
+.gradient-line:nth-child(2) {
+  top: 35%;
+  animation: slide-right 12s ease infinite;
+  animation-delay: 2s;
+}
+
+.gradient-line:nth-child(3) {
+  top: 65%;
+  animation: slide-right 10s ease infinite;
+  animation-delay: 1s;
+}
+
+.gradient-line:nth-child(4) {
+  top: 85%;
+  animation: slide-right 15s ease infinite;
+  animation-delay: 3s;
+}
+
+/* Background Particles */
+.particle {
+  position: absolute;
+  background-color: var(--dark-yellow);
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+/* Different Particle Sizes */
+.particle-sm {
+  width: 3px;
+  height: 3px;
+}
+
+.particle-md {
+  width: 5px;
+  height: 5px;
+}
+
+.particle-lg {
+  width: 8px;
+  height: 8px;
+}
+
+/* Typing Animation for Hero Title */
+.hero h1 {
+  font-size: 56px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end);
+}
+
+/* Glow effect for title and subtitle */
+.hero h1, .hero .subtitle {
+  text-shadow: 0 0 10px rgba(230, 180, 0, 0.1);
+}
+
+.hero .subtitle {
+  font-size: 18px;
+  color: var(--medium-gray);
+  margin-bottom: 30px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: var(--transition);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: transparent;
+  border: 2px solid var(--dark-yellow);
+  color: var(--dark-yellow);
+  font-weight: 600;
+  border-radius: 4px;
+  transition: var(--transition);
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(230, 180, 0, 0.1);
+  transition: var(--transition);
+  z-index: -1;
+}
+
+.cta-button:hover {
+  color: var(--dark-yellow-light);
+  background-color: transparent;
+  box-shadow: 0 5px 15px rgba(230, 180, 0, 0.2);
+}
+
+.cta-button:hover::before {
+  left: 0;
+}
+
+/* Blinking cursor animation */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--dark-yellow); }
+}
+
+/* Typing animation */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Slide animations */
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%) scaleX(0);
   }
-  
+  50% {
+    transform: translateX(0) scaleX(1);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
+/* Floating animation for particles */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-15px) translateX(15px);
+  }
+  50% {
+    transform: translateY(15px) translateX(-15px);
+  }
+  75% {
+    transform: translateY(-5px) translateX(-10px);
+  }
+}
+
+/* Apply floating animation to individual particles */
+.particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation: float-particle 10s infinite ease-in-out;
+}
+
+.particle:nth-child(2) {
+  top: 70%;
+  left: 20%;
+  animation: float-particle 15s infinite ease-in-out;
+  animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+  top: 40%;
+  left: 70%;
+  animation: float-particle 12s infinite ease-in-out;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(4) {
+  top: 15%;
+  left: 80%;
+  animation: float-particle 18s infinite ease-in-out;
+  animation-delay: 3s;
+}
+
+.particle:nth-child(5) {
+  top: 60%;
+  left: 85%;
+  animation: float-particle 20s infinite ease-in-out;
+  animation-delay: 4s;
+}
+
+.particle:nth-child(6) {
+  top: 30%;
+  left: 40%;
+  animation: float-particle 14s infinite ease-in-out;
+  animation-delay: 5s;
+}
+
+.particle:nth-child(7) {
+  top: 75%;
+  left: 50%;
+  animation: float-particle 16s infinite ease-in-out;
+  animation-delay: 6s;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
   .hero h1 {
-    font-size: 56px;
-    margin-bottom: 15px;
-    line-height: 1.1;
+    font-size: 40px;
+    white-space: normal;
+    animation: none;
   }
-  
-  .hero .subtitle {
-    font-size: 18px;
-    color: var(--medium-gray);
-    margin-bottom: 30px;
-    opacity: 0;
-    transition: var(--transition);
+}
+
+@media screen and (max-width: 576px) {
+  .hero h1 {
+    font-size: 32px;
   }
-  
-  .cta-button {
-    display: inline-block;
-    padding: 12px 28px;
-    background-color: transparent;
-    border: 2px solid var(--dark-yellow);
-    color: var(--dark-yellow);
-    font-weight: 600;
-    border-radius: 4px;
-    transition: var(--transition);
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  
-  .cta-button:hover {
-    background-color: rgba(230, 180, 0, 0.1);
-    box-shadow: 0 5px 15px rgba(230, 180, 0, 0.2);
-  }
-  
-  /* About Section */
-  .about-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 40px;
-  }
-  
-  .profile-placeholder {
-    width: 250px;
-    height: 250px;
-    border-radius: 5px;
-    background-color: var(--dark-yellow);
-    position: relative;
-    z-index: 1;
-  }
-  
-  .profile-placeholder:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--dark-yellow);
-    border-radius: 5px;
-    top: 15px;
-    left: 15px;
-    z-index: -1;
-    transition: var(--transition);
-  }
-  
-  .about-text p {
-    margin-bottom: 15px;
-    color: var(--medium-gray);
-  }
-  
-  .personal-info {
-    margin-top: 30px;
-  }
-  
-  .info-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .info-item i {
-    color: var(--dark-yellow);
-    margin-right: 10px;
-    width: 20px;
-  }
-  
-  /* Education Section */
-  .education {
-    background-color: var(--navy-blue-light);
-  }
-  
-  .education-item {
-    padding: 25px;
-    border-left: 2px solid var(--dark-yellow);
-    margin-bottom: 20px;
-    background-color: var(--navy-blue);
-    border-radius: 5px;
-    box-shadow: 0 10px 30px -15px var(--shadow);
-  }
-  
-  .education-item h3 {
-    color: var(--white);
-    margin-bottom: 5px;
-  }
-  
-  .institution {
-    color: var(--dark-yellow);
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-  
-  .duration {
-    font-style: italic;
-    color: var(--medium-gray);
-    margin-bottom: 15px;
-  }
-  
-  .course-list {
-    margin: 15px 0 15px 20px;
-    color: var(--medium-gray);
-  }
-  
-  .achievement {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: rgba(230, 180, 0, 0.1);
-    border-radius: 4px;
-  }
-  
-  .achievement i {
-    color: var(--dark-yellow);
-    margin-right: 10px;
-  }
-  
+}
   /* Skills Section */
   .skills-container {
     display: grid;
@@ -805,6 +1056,178 @@
       padding: 60px 0;
     }
   }
+  /* Enhanced Education Section Styling */
+.education {
+  background-color: var(--navy-blue-light);
+  position: relative;
+}
+
+/* Add subtle background pattern */
+.education::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(var(--dark-gray) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.05;
+}
+
+.education .container {
+  position: relative;
+  z-index: 1;
+}
+
+.education h2 {
+  margin-bottom: 40px;
+  color: var(--white);
+  font-size: 36px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.education h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 3px;
+  background: var(--dark-yellow);
+  border-radius: 2px;
+}
+
+.education-item {
+  padding: 35px;
+  border-left: 3px solid var(--dark-yellow);
+  margin-bottom: 30px;
+  background-color: var(--navy-blue);
+  border-radius: 8px;
+  box-shadow: 0 15px 30px -10px var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.education-item::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--dark-yellow), var(--dark-yellow-light));
+}
+
+.education-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px var(--shadow);
+}
+
+.education-item h3 {
+  color: var(--white);
+  margin-bottom: 10px;
+  font-size: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.institution {
+  color: var(--dark-yellow);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.institution::before {
+  content: '\f19d'; /* Font Awesome graduation cap icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.duration {
+  font-style: italic;
+  color: var(--medium-gray);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.duration::before {
+  content: '\f017'; /* Font Awesome clock icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 10px;
+  font-size: 14px;
+  color: var(--medium-gray);
+}
+
+.description {
+  margin-bottom: 20px;
+  line-height: 1.7;
+  color: var(--light-gray);
+  font-size: 16px;
+}
+
+.course-list {
+  margin: 20px 0 25px 15px;
+  color: var(--medium-gray);
+  column-count: 2;
+  column-gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .course-list {
+    column-count: 1;
+  }
+}
+
+
+
+.course-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--dark-yellow);
+  border-radius: 50%;
+}
+
+.achievement {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(230, 180, 0, 0.08);
+  border-radius: 6px;
+  border-left: 3px solid var(--dark-yellow);
+  transition: var(--transition);
+}
+
+.achievement:hover {
+  background-color: rgba(230, 180, 0, 0.12);
+}
+
+.achievement i {
+  color: var(--dark-yellow);
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.achievement span {
+  color: var(--light-gray);
+  font-weight: 500;
+  line-height: 1.5;
+}
   
   @media screen and (max-width: 576px) {
     .container {
