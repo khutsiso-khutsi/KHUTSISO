@@ -3,356 +3,1488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khutsiso Letageng - Software Developer</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Khutsiso Letageng — Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0f1e3c;
+            --navy-mid: #1a2f55;
+            --navy-light: #243a6a;
+            --slate: #2e4070;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --white: #f5f7fa;
+            --grey-light: #dde3ee;
+            --grey-mid: #8a96b0;
+            --grey-dark: #4a5568;
+            --surface: #162040;
+            --card: #1e2d52;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--navy); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        /* ─── NAV ─── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+            background: rgba(15, 30, 60, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            transition: var(--transition);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+
+        .logo span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--grey-light);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px; height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* ─── HERO ─── */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .hero-backdrop {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 10% 80%, rgba(26,47,85,0.8) 0%, transparent 60%);
+        }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 40px; height: 1px;
+            background: var(--gold);
+        }
+
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.5s forwards;
+        }
+
+        .hero-name em {
+            font-style: normal;
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--grey-mid);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.7s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.9s forwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hero-stats {
+            position: absolute;
+            right: 5%;
+            bottom: 12%;
+            display: flex;
+            gap: 3rem;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--grey-mid);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.5s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--grey-mid);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        /* ─── SECTIONS ─── */
+        section { padding: 100px 5%; }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-eyebrow::before {
+            content: '';
+            display: block;
+            width: 30px; height: 1px;
+            background: var(--gold);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .divider {
+            width: 60px; height: 3px;
+            background: var(--gold);
+            margin-top: 1rem;
+        }
+
+        /* ─── ABOUT ─── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image-wrap {
+            position: relative;
+        }
+
+        .about-image-wrap::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px;
+            width: 100%; height: 100%;
+            border: 2px solid var(--gold);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .about-image-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: -15px; right: -15px;
+            width: 60%; height: 60%;
+            background: rgba(201,168,76,0.08);
+            z-index: 0;
+        }
+
+        .about-image-wrap img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            object-position: top;
+            position: relative;
+            z-index: 1;
+            filter: grayscale(20%);
+        }
+
+        .about-text p {
+            color: var(--grey-mid);
+            line-height: 1.85;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .about-text p strong { color: var(--white); font-weight: 600; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--grey-light);
+        }
+
+        .info-item i {
+            color: var(--gold);
+            width: 16px;
+            font-size: 0.9rem;
+        }
+
+        /* ─── EDUCATION ─── */
+        #education { background: var(--surface); }
+
+        .edu-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .edu-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px; bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        .edu-item {
+            position: relative;
+            margin-bottom: 50px;
+            padding: 35px;
+            background: var(--card);
+            border: 1px solid rgba(201,168,76,0.1);
+            transition: border-color var(--transition);
+        }
+
+        .edu-item:hover { border-color: rgba(201,168,76,0.35); }
+
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            left: -36px; top: 35px;
+            width: 12px; height: 12px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(201,168,76,0.15);
+        }
+
+        .edu-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(201,168,76,0.12);
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .edu-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .edu-item .institution {
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .edu-item .duration {
+            color: var(--grey-mid);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .edu-item p { color: var(--grey-mid); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.75rem;
+        }
+
+        .course-tag {
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--grey-light);
+            font-size: 0.78rem;
+            border-radius: 2px;
+        }
+
+        .achievement-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1.2rem;
+            padding: 12px 16px;
+            background: rgba(201,168,76,0.08);
+            border-left: 3px solid var(--gold);
+            color: var(--gold-light);
+            font-size: 0.85rem;
+        }
+
+        /* ─── SKILLS ─── */
+        .skills-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .skills-group h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(201,168,76,0.15);
+        }
+
+        .skill-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            font-size: 0.88rem;
+            color: var(--grey-light);
+            font-weight: 500;
+        }
+
+        .skill-pct {
+            font-size: 0.78rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .bar-track {
+            height: 3px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 2px;
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .skills-tags-section { margin-top: 60px; }
+
+        .skills-tags-section h3 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-pill {
+            padding: 8px 18px;
+            background: var(--card);
+            border: 1px solid rgba(201,168,76,0.15);
+            color: var(--grey-light);
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .tag-pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201,168,76,0.05);
+        }
+
+        /* ─── EXPERIENCE ─── */
+        #experience { background: var(--surface); }
+
+        .exp-card {
+            padding: 40px;
+            background: var(--card);
+            border: 1px solid rgba(201,168,76,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .exp-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .exp-card .org {
+            color: var(--gold);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .exp-duration {
+            padding: 6px 16px;
+            background: rgba(201,168,76,0.1);
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .exp-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .exp-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--grey-mid);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        .exp-list li::before {
+            content: '—';
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ─── PROJECTS ─── */
+        .project-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--grey-mid);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201,168,76,0.05);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5px;
+            background: rgba(201,168,76,0.08);
+        }
+
+        .project-card {
+            background: var(--card);
+            padding: 35px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition);
+        }
+
+        .project-card:hover::after { transform: scaleX(1); }
+        .project-card:hover { background: #223060; }
+
+        .project-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: rgba(201,168,76,0.12);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .project-card p {
+            color: var(--grey-mid);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tag {
+            padding: 3px 10px;
+            background: rgba(201,168,76,0.08);
+            border: 1px solid rgba(201,168,76,0.2);
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--grey-mid);
+            transition: color var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-link:hover { color: var(--gold); }
+        .project-link i { font-size: 0.75rem; }
+
+        /* ─── CONTACT ─── */
+        #contact { background: var(--surface); }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-card {
+            padding: 24px;
+            background: var(--card);
+            border: 1px solid rgba(201,168,76,0.1);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: border-color var(--transition);
+        }
+
+        .contact-card:hover { border-color: rgba(201,168,76,0.35); }
+
+        .contact-icon {
+            width: 46px; height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201,168,76,0.1);
+            color: var(--gold);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-card h4 {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--grey-mid);
+            margin-bottom: 4px;
+        }
+
+        .contact-card p {
+            font-size: 0.9rem;
+            color: var(--grey-light);
+        }
+
+        .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--grey-mid);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color var(--transition);
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--grey-dark);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 40px 5%;
+            background: #0a1528;
+            border-top: 1px solid rgba(201,168,76,0.1);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+        }
+
+        .footer-logo span { color: var(--gold); }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-link {
+            width: 38px; height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--grey-mid);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .footer-copy {
+            font-size: 0.78rem;
+            color: var(--grey-dark);
+            width: 100%;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.5rem;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-image-wrap { max-width: 320px; }
+            .skills-layout { grid-template-columns: 1fr; gap: 40px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .exp-list { grid-template-columns: 1fr; }
+            .hero-stats { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 70px; left: 0; right: 0;
+                background: rgba(10,21,40,0.98);
+                padding: 2rem;
+                gap: 1.5rem;
+            }
+            section { padding: 70px 5%; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Background Shapes -->
-    <div class="bg-shapes">
-        <div class="shape shape-circle"></div>
-        <div class="shape shape-square"></div>
-        <div class="shape shape-triangle"></div>
-        <div class="shape shape-circle"></div>
-        <div class="shape shape-square"></div>
-        <div class="shape shape-triangle"></div>
-        <div class="shape shape-circle"></div>
-        <div class="shape shape-square"></div>
-        <div class="shape shape-triangle"></div>
+
+<header>
+    <nav>
+        <div class="logo">Khutsiso <span>Letageng</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu-btn" id="menuBtn">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section id="home">
+    <div class="hero-backdrop"></div>
+    <div class="grid-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">Available for Opportunities</div>
+        <h1 class="hero-name">Khutsiso<br><em>Letageng</em></h1>
+        <p class="hero-subtitle">Software Developer · IT Specialist · UI/UX Designer<br>Advanced Diploma Candidate — Nelson Mandela University</p>
+        <div class="hero-cta">
+            <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+            <a href="#projects" class="btn-outline"><i class="fas fa-code"></i> View Work</a>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <span class="stat-num">4+</span>
+            <span class="stat-label">Years Study</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">Technologies</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-num">5+</span>
+            <span class="stat-label">Projects</span>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Who I Am</div>
+        <h2 class="section-title">About Me</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="about-grid">
+        <div class="about-image-wrap reveal">
+            <img src="images/IMG_4869.jpg" alt="Khutsiso Letageng">
+        </div>
+        <div class="about-text reveal">
+            <p>I am <strong>Khutsiso Letageng</strong>, a software developer now in my <strong>Advanced Diploma in Software Development</strong> at Nelson Mandela University — having graduated from my three-year degree with distinction for my final-year project.</p>
+            <p>Beyond academics, I serve as an <strong>IT and Design Specialist with Enactus</strong>, applying my technical expertise and creative skills to real-world social entrepreneurship initiatives that create measurable impact in our community.</p>
+            <p>My focus areas include full-stack web development, database architecture, UI/UX design, and building accessible digital solutions that solve real problems with elegant user experiences.</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>khutsisoletageng7@gmail.com</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+27 72 319 6731</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Port Elizabeth, South Africa</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Nelson Mandela University</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Academic Background</div>
+        <h2 class="section-title">Education</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="edu-timeline">
+
+        <div class="edu-item reveal">
+            <div class="edu-badge">Current</div>
+            <h3>Advanced Diploma in Software Development</h3>
+            <p class="institution">Nelson Mandela University</p>
+            <p class="duration">2026 — Present</p>
+            <p>Building on the three-year degree foundation with advanced topics in enterprise software architecture, cloud computing, advanced database management, and professional software engineering practices.</p>
+            <div class="course-tags">
+                <span class="course-tag">Operating Systems</span>
+                <span class="course-tag">Information Security</span>
+                <span class="course-tag">Applied Project </span>
+                <span class="course-tag">Development Software</span>
+                <span class="course-tag">It Project Management</span>
+                <span class="course-tag">It Support Services</span>
+                <span class="course-tag">User Interfaces</span>
+            </div>
+        </div>
+
+        <div class="edu-item reveal">
+            <div class="edu-badge">Graduated</div>
+            <h3>Diploma in Software Development</h3>
+            <p class="institution">Nelson Mandela University</p>
+            <p class="duration">2022 — 2025</p>
+            <p>Comprehensive training in software development principles, programming languages, system design, and project management across three years of study.</p>
+            <div class="course-tags">
+                <span class="course-tag">C# & Python</span>
+                <span class="course-tag">Web Development</span>
+                <span class="course-tag">Database Systems</span>
+                <span class="course-tag">UI Design</span>
+                <span class="course-tag">Mobile Dev</span>
+                <span class="course-tag">Software Engineering</span>
+            </div>
+            <div class="achievement-badge">
+                <i class="fas fa-award"></i>
+                <span>Distinction — Third-Year Project: "Integrated Hospital Management System"</span>
+            </div>
+        </div>
+
+        <div class="edu-item reveal">
+            <div class="edu-badge">Completed</div>
+            <h3>Higher Certificate in IT User Support</h3>
+            <p class="institution">Nelson Mandela University</p>
+            <p class="duration">2021</p>
+            <p>Specialised training in IT systems support, troubleshooting, network maintenance, and hardware/software diagnostics.</p>
+            <div class="course-tags">
+                <span class="course-tag">Technical Support</span>
+                <span class="course-tag">Network Maintenance</span>
+                <span class="course-tag">Hardware Diagnostics</span>
+                <span class="course-tag">IT Customer Service</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Technical Proficiency</div>
+        <h2 class="section-title">Skills</h2>
+        <div class="divider"></div>
     </div>
 
-    <header>
-        <nav>
-            <div class="logo">Khutsiso Letageng</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="mobile-menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
+    <div class="skills-layout">
+        <div class="skills-group reveal">
+            <h3>Core Development</h3>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">HTML5 / CSS3</span><span class="skill-pct">90%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
             </div>
-        </nav>
-    </header>
-
-    <section id="home" class="hero">
-        <!-- Background Elements -->
-        <div class="hero-bg">
-            <!-- Animated gradient lines -->
-            <div class="gradient-line"></div>
-            <div class="gradient-line"></div>
-            <div class="gradient-line"></div>
-            <div class="gradient-line"></div>
-            
-            <!-- Floating particles -->
-            <div class="particle particle-sm"></div>
-            <div class="particle particle-md"></div>
-            <div class="particle particle-lg"></div>
-            <div class="particle particle-sm"></div>
-            <div class="particle particle-md"></div>
-            <div class="particle particle-lg"></div>
-            <div class="particle particle-sm"></div>
-        </div>
-        
-        <div class="container">
-            <h1>Hello, I'm Khutsiso Letageng</h1>
-            <p class="subtitle">Software Developer | IT Specialist | Designer</p>
-            <a href="#contact" class="cta-button">Get In Touch</a>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <!-- Replace "image/your-profile-picture.jpg" with the actual path to your image -->
-                    <img src="images/IMG_4869.jpg" alt="Khutsiso Letageng">
-                </div>
-                </div>
-                <div class="about-text">
-                   
-                    <p>I am Khutsiso Letageng, a passionate software developer currently pursuing my third year in Software Development at Nelson Mandela University. With a strong foundation in programming concepts and practical application, I am constantly seeking opportunities to expand my knowledge and skills in the tech industry.</p>
-                    <p>Beyond my academic pursuits, I serve as an IT and Design specialist with Enactus, where I leverage my technical expertise and creative abilities to support social entrepreneurship initiatives. This role has allowed me to apply my skills in real-world scenarios while contributing to projects that make a positive impact in our community.</p>
-                    <p>I am particularly interested in web development, user interface design, and creating accessible digital solutions. My goal is to build innovative software that solves real problems while providing intuitive user experiences.</p>
-                    <div class="personal-info">
-                        <div class="info-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>khutsisoletageng7@gmail.com</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-phone"></i>
-                            <span>+27 72 319 6731</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Port Elizabeth, South Africa</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">JavaScript</span><span class="skill-pct">85%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">C# / ASP.NET</span><span class="skill-pct">82%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">Python</span><span class="skill-pct">78%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">Python Data Analysis</span><span class="skill-pct">72%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="72"></div></div>
             </div>
         </div>
-    </section>
 
-    <section id="education" class="education">
-        <div class="container">
-            <h2>Education</h2>
-            <div class="education-item">
-                <h3>Software Development</h3>
-                <p class="institution">Nelson Mandela University</p>
-                <p class="duration">2022 - Present (Third Year)</p>
-                <p class="description">
-                    Pursuing comprehensive training in software development principles, programming languages, system design, and project management. Core coursework includes:
-                </p>
-                <ul class="course-list">
-                    <li>Advanced Programming (Java, Python)</li>
-                    <li>Web Development (HTML, CSS, JavaScript)</li>
-                    <li>Database Management Systems</li>
-                    <li>Software Engineering Principles</li>
-                    <li>User Interface Design</li>
-                    <li>Mobile Application Development</li>
-                </ul>
-                <div class="achievement">
-                    <i class="fas fa-award"></i>
-                    <span>Received Distinction for Third-Year Project: "Integrated Hospital Management System"</span>
-                </div>
+        <div class="skills-group reveal">
+            <h3>Frameworks & Tools</h3>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">ASP.NET MVC / Dapper</span><span class="skill-pct">80%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
             </div>
-            
-            <div class="education-item">
-                <h3>High Certificate in IT User Support</h3>
-                <p class="institution">Nelson Mandela University</p>
-                <p class="duration">2021 - Completed</p>
-                <p class="description">
-                    Specialized training in providing technical support and troubleshooting for IT systems and users. Core areas included:
-                </p>
-                <ul class="course-list">
-                    <li>Technical Support Fundamentals</li>
-                    <li>IT System Troubleshooting</li>
-                    <li>Customer Service for IT Professionals</li>
-                    <li>Network Support and Maintenance</li>
-                    <li>Hardware and Software Diagnostics</li>
-                </ul>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">SQL / NoSQL Databases</span><span class="skill-pct">78%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">Git & DevOps</span><span class="skill-pct">75%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="75"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">Cloud (AWS / Azure)</span><span class="skill-pct">65%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="65"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-meta"><span class="skill-name">UI/UX Design</span><span class="skill-pct">87%</span></div>
+                <div class="bar-track"><div class="bar-fill" data-width="87"></div></div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>My Skills</h2>
-            <div class="skills-container">
-                <div class="skill">
-                    <h3>HTML5/CSS3</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 90%"></div>
-                    </div>
-                    <span class="skill-percentage">90%</span>
-                </div>
-                <div class="skill">
-                    <h3>JavaScript</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 85%"></div>
-                    </div>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="skill">
-                    <h3>C#</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 80%"></div>
-                    </div>
-                    <span class="skill-percentage">80%</span>
-                </div>
-                <div class="skill">
-                    <h3>Python</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 75%"></div>
-                    </div>
-                    <span class="skill-percentage">75%</span>
-                </div>
-                <div class="skill">
-                    <h3>UI/UX Design</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 85%"></div>
-                    </div>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="skill">
-                    <h3>Database Management</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 70%"></div>
-                    </div>
-                    <span class="skill-percentage">70%</span>
-                </div>
-                <div class="skill">
-                    <h3>IT User Support</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 90%"></div>
-                    </div>
-                    <span class="skill-percentage">90%</span>
-                </div>
-            </div>
+    <div class="skills-tags-section reveal">
+        <h3>Technologies & Tools</h3>
+        <div class="tags-cloud">
+            <span class="tag-pill">C#</span>
+            <span class="tag-pill">ASP.NET Core</span>
+            <span class="tag-pill">Dapper ORM</span>
+            <span class="tag-pill">Entity Framework</span>
+            <span class="tag-pill">Python</span>
+            <span class="tag-pill">Pandas / NumPy</span>
+            <span class="tag-pill">MySQL</span>
+            <span class="tag-pill">SQL Server</span>
+            <span class="tag-pill">MongoDB</span>
+            <span class="tag-pill">Git / GitHub</span>
+            <span class="tag-pill">CI/CD Pipelines</span>
+            <span class="tag-pill">Azure DevOps</span>
+            <span class="tag-pill">AWS S3 / EC2</span>
+            <span class="tag-pill">Docker</span>
+            <span class="tag-pill">REST APIs</span>
+            <span class="tag-pill">MVC Architecture</span>
+            <span class="tag-pill">React Native</span>
+            <span class="tag-pill">Firebase</span>
+            <span class="tag-pill">Figma</span>
+            <span class="tag-pill">Adobe Suite</span>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2>Experience</h2>
-            <div class="experience-item">
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Work Experience</div>
+        <h2 class="section-title">Experience</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="exp-card reveal">
+        <div class="exp-header">
+            <div>
                 <h3>IT and Design Specialist</h3>
-                <p class="organization">Enactus - Nelson Mandela University Chapter</p>
-                <p class="duration">2023 - Present</p>
-                <p class="description">
-                    As the IT and Design Specialist at Enactus, I am responsible for:
-                </p>
-                <ul class="responsibilities">
-                    <li>Developing and maintaining the chapter's web presence and digital platforms</li>
-                    <li>Creating visual designs and marketing materials for social entrepreneurship projects</li>
-                    <li>Implementing IT solutions to streamline team communication and project management</li>
-                    <li>Providing technical support for presentations and events</li>
-                    <li>Training team members on using digital tools effectively for project execution</li>
-                    <li>Collaborating with project teams to develop technological solutions for community challenges</li>
-                </ul>
+                <p class="org">Enactus — Nelson Mandela University Chapter</p>
             </div>
+            <div class="exp-duration">2023 — Present</div>
         </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>My Projects</h2>
-            <div class="project-filters">
-                
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="web">Web Dev</button>
-                <button class="filter-btn" data-filter="mobile">Mobile</button>
-                <button class="filter-btn" data-filter="design">Design</button>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card" data-category="web">
-                    <div class="project-image">
-                        <span class="featured-badge">Distinction</span>
-                    </div>
-                    <h3>Integrated Hospital Management System</h3>
-                    <p>My third-year project that received distinction. A comprehensive system for hospital management including patient records, appointment scheduling, billing, and inventory management. Built with Java, Spring Boot, and MySQL.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">C#</span>
-                        <span class="project-tag">ASP.NET</span>
-                        <span class="project-tag">MySQL</span>
-                        <span class="project-tag">MVC</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card" data-category="mobile">
-                    <div class="project-image"></div>
-                    <h3>Community Support App</h3>
-                    <p>A mobile application developed for Enactus to connect local community initiatives with volunteers and resources. Built using React Native and Firebase.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">React Native</span>
-                        <span class="project-tag">Firebase</span>
-                        <span class="project-tag">Mobile</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card" data-category="web">
-                    <div class="project-image"></div>
-                    <h3>E-Learning Platform</h3>
-                    <p>A web-based learning management system created as part of university coursework, featuring course content delivery and progress tracking.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">HTML/CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">PHP</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project</a>
-                        <a href="#" class="project-link">GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card" data-category="design">
-                    <div class="project-image"></div>
-                    <h3>Enactus Branding Package</h3>
-                    <p>Developed a comprehensive visual identity and brand guidelines for Enactus Nelson Mandela University chapter, including logos, social media templates, and marketing materials.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Illustrator</span>
-                        <span class="project-tag">Photoshop</span>
-                        <span class="project-tag">Branding</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Project</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>khutsisoletageng7@gmail.com</p>
-                    </div>
-                    <div class="contact-card">
-                        <i class="fas fa-phone"></i>
-                        <h3>Phone</h3>
-                        <p>+27 72 319 6731</p>
-                    </div>
-                    <div class="contact-card">
-                        <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp</h3>
-                        <p>+27 72 319 6731</p>
-                        <button id="whatsapp-button" class="whatsapp-btn" data-number="27123456789">Message Me</button>
-                    </div>
-                </div>
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/khutsiso-khutsi" class="social-link"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://www.linkedin.com/in/khutsiso-letageng-8a7b53284/" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=21b058e" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-            </div>
-            <p>&copy; 2025 Khutsiso Letageng. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="theme-switch">
-            <input type="checkbox" id="theme-switch">
-            <span class="slider"></span>
-        </label>
+        <ul class="exp-list">
+            <li>Developing and maintaining the chapter's web presence and digital platforms</li>
+            <li>Creating visual designs and marketing materials for social entrepreneurship projects</li>
+            <li>Implementing IT solutions to streamline team communication and project management</li>
+            <li>Providing technical support for presentations and events</li>
+            <li>Training team members on using digital tools effectively</li>
+            <li>Collaborating with project teams to develop tech solutions for community challenges</li>
+        </ul>
     </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Selected Work</div>
+        <h2 class="section-title">Projects</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web Dev</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="design">Design</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+
+        <div class="project-card reveal" data-category="web">
+            <div class="project-num">01</div>
+            <div><span class="featured-badge">Distinction</span></div>
+            <h3>Integrated Hospital Management System</h3>
+            <p>Comprehensive system covering patient records, appointment scheduling, billing, and inventory management. Awarded distinction as third-year capstone project.</p>
+            <div class="project-tags">
+                <span class="project-tag">C#</span>
+                <span class="project-tag">ASP.NET</span>
+                <span class="project-tag">Dapper</span>
+                <span class="project-tag">MySQL</span>
+                <span class="project-tag">MVC</span>
+            </div>
+            <div class="project-links">
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                <a href="https://github.com/khutsiso-khutsi" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
+        <div class="project-card reveal" data-category="mobile">
+            <div class="project-num">02</div>
+            <h3>Community Support App</h3>
+            <p>Mobile application for Enactus connecting local community initiatives with volunteers and resources in real time.</p>
+            <div class="project-tags">
+                <span class="project-tag">React Native</span>
+                <span class="project-tag">Firebase</span>
+                <span class="project-tag">Mobile</span>
+            </div>
+            <div class="project-links">
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                <a href="https://github.com/khutsiso-khutsi" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
+        <div class="project-card reveal" data-category="web">
+            <div class="project-num">03</div>
+            <h3>E-Learning Platform</h3>
+            <p>Web-based learning management system featuring course content delivery, progress tracking, and student dashboards.</p>
+            <div class="project-tags">
+                <span class="project-tag">HTML/CSS</span>
+                <span class="project-tag">JavaScript</span>
+                <span class="project-tag">PHP</span>
+                <span class="project-tag">MySQL</span>
+            </div>
+            <div class="project-links">
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                <a href="https://github.com/khutsiso-khutsi" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+
+        <div class="project-card reveal" data-category="design">
+            <div class="project-num">04</div>
+            <h3>Enactus Branding Package</h3>
+            <p>Comprehensive visual identity and brand guidelines including logos, social media templates, and marketing collateral.</p>
+            <div class="project-tags">
+                <span class="project-tag">Illustrator</span>
+                <span class="project-tag">Photoshop</span>
+                <span class="project-tag">Branding</span>
+            </div>
+            <div class="project-links">
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="section-header reveal">
+        <div class="section-eyebrow">Let's Connect</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="divider"></div>
+    </div>
+    <div class="contact-grid">
+        <div class="contact-cards reveal">
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <h4>Email</h4>
+                    <p>khutsisoletageng7@gmail.com</p>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+27 72 319 6731</p>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                <div>
+                    <h4>WhatsApp</h4>
+                    <p>+27 72 319 6731</p>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+                <div>
+                    <h4>LinkedIn</h4>
+                    <p>khutsiso-letageng</p>
+                </div>
+            </div>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="What would you like to discuss?" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="align-self: flex-start; border: none; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-logo">Khutsiso <span>Letageng</span></div>
+        <div class="social-links">
+            <a href="https://github.com/khutsiso-khutsi" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/khutsiso-letageng-8a7b53284/" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=21b058e" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p class="footer-copy">&copy; 2025 Khutsiso Letageng. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Animate skill bars
+    const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width + '%';
+                });
+                barObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.skills-group').forEach(g => barObserver.observe(g));
+
+    // Project filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+            });
+        });
+    });
+
+    // Contact form
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button[type="submit"]');
+        btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        btn.style.background = '#2d7a4a';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            btn.style.background = '';
+            this.reset();
+        }, 3000);
+    });
+
+    // WhatsApp button
+    document.querySelectorAll('.contact-card').forEach(card => {
+        if (card.querySelector('.fa-whatsapp')) {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                window.open('https://wa.me/27723196731', '_blank');
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
